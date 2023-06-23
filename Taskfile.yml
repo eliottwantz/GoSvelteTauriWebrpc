@@ -6,10 +6,24 @@ vars:
   GREETING: Hello, World!
 
 tasks:
-  dev:
-    cmds:
-      - watchexec -rc -e go,mod -i .git -- go run .
   gen:
     cmds:
       - webrpc-gen -schema="example.ridl" -target=golang -pkg=api -server -out="./api/example.gen.go"
       - webrpc-gen -schema="example.ridl" -target=typescript -client -out="./webapp/src/api/example.gen.ts"
+  go:
+    cmds:
+      - watchexec -rc -e go,mod -i .git -- go run .
+  web:
+    dir: "./webapp"
+    cmds:
+      - pnpm dev
+  desktop:
+    dir: "./webapp"
+    cmds:
+      - pnpm tauri dev -r cargo-zigbuild # Use cargo-zigbuild for Zig linker
+  dev:
+    cmds:
+      - task -p go web # parallel tasks
+  devDesktop:
+    cmds:
+      - task -p go desktop # parallel tasks

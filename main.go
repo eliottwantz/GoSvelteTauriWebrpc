@@ -33,6 +33,6 @@ func startServer() error {
 	webrpcHandler := api.NewExampleServiceServer(api.NewExampleServiceRPC())
 	r.Handle("/*", webrpcHandler)
 
-	fmt.Println("Listening on 127.0.0.1:8080")
+	fmt.Println(" Listening on 127.0.0.1:8080")
 	return http.ListenAndServe("127.0.0.1:8080", r)
 }
