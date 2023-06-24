@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import sveltePreprocess from "svelte-preprocess";
 import { internalIpV4 } from "internal-ip";
+import * as path from "path";
 
 const mobile =
   process.env.TAURI_PLATFORM === "android" ||
@@ -18,6 +19,15 @@ export default defineConfig(async () => ({
       ],
     }),
   ],
+
+  resolve: {
+    alias: [
+      {
+        find: "src",
+        replacement: path.resolve(__dirname, "src"),
+      },
+    ],
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
