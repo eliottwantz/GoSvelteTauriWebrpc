@@ -1,3 +1,4 @@
+import { Result, fromPromise } from "neverthrow";
 import { ApiService, WebrpcError, type Fetch } from "./api.gen";
 
 const hostname = "http://localhost:8080";
@@ -6,21 +7,14 @@ const fetcher: Fetch = (input, init) => {
 };
 export const api = new ApiService(hostname, fetcher);
 
-async function safeFetch<T>(
+export async function safeFetch<T>(
   fetchMethod: () => Promise<T>
-): Promise<FetchResult<T>> {
-  try {
-    return { data: await fetchMethod() };
-  } catch (e) {
-    if (e instanceof WebrpcError) {
-      const { message, name, cause, status, code } = e;
-      console.log(message, name, cause, status, code);
-      return { error: e, cause: cause ? cause : message };
-    } else {
-      console.error(e);
-      throw e;
-    }
-  }
+): Promise<Result<T, FetchError>> {
+  return fromPromise(fetchMethod(), (e) => {
+    const error = e as WebrpcError;
+    let { message, cause, status } = error;
+    if (!cause) cause = message;
+    return { error, cause: status !== 500 ? cause : message };
+  });
 }
-
-type FetchResult<T> = { data: T } | { error: WebrpcError; cause: string };
+type FetchError = { error: WebrpcError; cause: string };

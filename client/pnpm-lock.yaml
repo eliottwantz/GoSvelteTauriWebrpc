@@ -31,6 +31,9 @@ devDependencies:
   internal-ip:
     specifier: ^7.0.0
     version: 7.0.0
+  neverthrow:
+    specifier: ^6.0.0
+    version: 6.0.0
   svelte:
     specifier: ^3.54.0
     version: 3.54.0
@@ -826,6 +829,10 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: true
+
+  /neverthrow@6.0.0:
+    resolution: {integrity: sha512-kPZKRs4VkdloCGQXPoP84q4sT/1Z+lYM61AXyV8wWa2hnuo5KpPBF2S3crSFnMrOgUISmEBP8Vo/ngGZX60NhA==}
     dev: true
 
   /normalize-path@3.0.0:

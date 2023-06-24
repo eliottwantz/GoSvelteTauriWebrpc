@@ -1,37 +1,26 @@
 <script lang="ts">
-  import { api } from "src/api";
-  import { WebrpcError } from "src/api/api.gen";
+  import { api, safeFetch } from "src/api";
 
   let number: number;
-  let error = "";
+  let errorMsg = "";
 
   async function fetchNumber() {
-    try {
-      const res = await api.randomNumber();
-      number = res.number;
-    } catch (e) {
-      if (e instanceof WebrpcError) {
-        console.log(e.message);
-        console.log(e.name);
-        console.log(e.cause);
-        console.log(e.status);
-        console.log(e.code);
-        if (e.status === 400) {
-          error = e.cause;
-        } else if (e.status === 500) {
-          error = e.message;
-        }
-      } else {
+    const res = await safeFetch(api.randomNumber);
+    res
+      .map((data) => {
+        number = data.number;
+        errorMsg = "";
+      })
+      .mapErr((e) => {
         console.log(e);
-        error = "Something went wrong";
-      }
-    }
+        errorMsg = e.cause;
+      });
   }
 </script>
 
 <form class="row" on:submit|preventDefault={fetchNumber}>
   <button type="submit">Number: {number ?? ""}</button>
-  <span class="error">{error ?? ""}</span>
+  <span class="error">{errorMsg ?? ""}</span>
 </form>
 
 <style>
