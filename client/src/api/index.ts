@@ -1,7 +1,7 @@
 import { Result, fromPromise } from "neverthrow";
 import { ApiService, WebrpcError, type Fetch } from "./api.gen";
 
-const hostname = "http://localhost:8080";
+const hostname = import.meta.env.VITE_API_URL;
 const fetcher: Fetch = (input, init) => {
   return fetch(input, init);
 };
