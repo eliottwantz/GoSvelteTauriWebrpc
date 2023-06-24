@@ -24,10 +24,13 @@ tasks:
   android:
     dir: "./client"
     cmds:
-      - pnpm tauri android dev # Use cargo-zigbuild for Zig linker
-  dev:
+      - pnpm tauri android dev
+  devWeb:
     cmds:
       - task -p go web # parallel tasks
   devDesktop:
     cmds:
       - task -p go desktop # parallel tasks
+  devAndroid:
+    cmds:
+      - task -p go android # parallel tasks
