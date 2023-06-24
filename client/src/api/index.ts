@@ -8,21 +8,19 @@ export const api = new ApiService(hostname, fetcher);
 
 async function safeFetch<T>(
   fetchMethod: () => Promise<T>
-): Promise<Result<T, WebrpcError>> {
+): Promise<FetchResult<T>> {
   try {
     return { data: await fetchMethod() };
   } catch (e) {
     if (e instanceof WebrpcError) {
       const { message, name, cause, status, code } = e;
       console.log(message, name, cause, status, code);
-      const err = { error: e, cause: cause ? cause : message };
-      return err;
+      return { error: e, cause: cause ? cause : message };
     } else {
       console.error(e);
+      throw e;
     }
   }
 }
 
-export type Result<T, E extends Error> = Ok<T> | Err<E>;
-export type Ok<T> = { data: T };
-export type Err<E> = { error: E; cause: string };
+type FetchResult<T> = { data: T } | { error: WebrpcError; cause: string };
