@@ -8,8 +8,8 @@ vars:
 tasks:
   gen:
     cmds:
-      - webrpc-gen -schema="example.ridl" -target=golang -pkg=api -server -out="./api/example.gen.go"
-      - webrpc-gen -schema="example.ridl" -target=typescript -client -out="./webapp/src/api/example.gen.ts"
+      - webrpc-gen -schema="api.ridl" -target=golang -pkg=api -server -out="./api/api.gen.go"
+      - webrpc-gen -schema="api.ridl" -target=typescript -client -out="./client/src/api/api.gen.ts"
   go:
     cmds:
       - watchexec -rc -e go,mod -i .git -- go run .

@@ -1,0 +1,7 @@
+webrpc = v1
+
+name = your-app
+version = v0.1.0
+
+service ApiService
+  - RandomNumber() => (number: int)

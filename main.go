@@ -30,7 +30,7 @@ func startServer() error {
 		w.Write([]byte("."))
 	})
 
-	webrpcHandler := api.NewExampleServiceServer(api.NewExampleServiceRPC())
+	webrpcHandler := api.NewApiServiceServer(api.NewApiServiceRPC())
 	r.Handle("/*", webrpcHandler)
 
 	fmt.Println(" Listening on 127.0.0.1:8080")
