@@ -14,13 +14,17 @@ tasks:
     cmds:
       - watchexec -rc -e go,mod -i .git -- go run .
   web:
-    dir: "./webapp"
+    dir: "./client"
     cmds:
       - pnpm dev
   desktop:
-    dir: "./webapp"
+    dir: "./client"
     cmds:
       - pnpm tauri dev -r cargo-zigbuild # Use cargo-zigbuild for Zig linker
+  android:
+    dir: "./client"
+    cmds:
+      - pnpm tauri android dev # Use cargo-zigbuild for Zig linker
   dev:
     cmds:
       - task -p go web # parallel tasks
